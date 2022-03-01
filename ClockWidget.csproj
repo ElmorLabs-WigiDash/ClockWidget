@@ -55,9 +55,20 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="preview_2x1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="preview_3x2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="widget_506x194_grey_gradient_dithered.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetDir)\*.dll" "$(SolutionDir)FrontierManager\bin\$(ConfigurationName)\Widgets\04E2CAFC-4BAB-4601-BD40-0D365C1C435C\" /F /Y
-xcopy "$(TargetDir)\*.png" "$(SolutionDir)FrontierManager\bin\$(ConfigurationName)\Widgets\04E2CAFC-4BAB-4601-BD40-0D365C1C435C\" /F /Y</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(TargetDir)\*" "$(SolutionDir)FrontierManager\bin\$(ConfigurationName)\net472\Widgets\04E2CAFC-4BAB-4601-BD40-0D365C1C435C\" /F /Y</PostBuildEvent>
   </PropertyGroup>
 </Project>
