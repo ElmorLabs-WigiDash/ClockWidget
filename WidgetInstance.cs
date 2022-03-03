@@ -29,7 +29,7 @@ namespace ClockWidget
 
         public UserControl GetSettingsControl()
         {
-            return new SettingsUserControl();
+            return new SettingsUserControl(this);
         }
 
         public void Dispose()
@@ -57,11 +57,14 @@ namespace ClockWidget
 
         private Font FontDate;
         private Font FontTime;
+        private Font FontTime12h;
         Bitmap BitmapCurrent;
         private Bitmap BitmapBackground;
         private DateTime timestamp_last;
 
         Mutex drawing_mutex = new Mutex();
+
+        private bool time_24h = true;
 
         public List<InstanceSetting> InstanceSettings { get; set; }
 
@@ -76,11 +79,13 @@ namespace ClockWidget
             {
                 FontDate = new Font("Verdana", 18, FontStyle.Bold);
                 FontTime = new Font("Basic Square 7", 72);
+                FontTime12h = new Font("Basic Square 7", 56);
             }
             else
             {
                 FontDate = new Font("Verdana", 24, FontStyle.Bold);
                 FontTime = new Font("Basic Square 7", 100);
+                FontTime12h = new Font("Basic Square 7", 80);
             }
 
             BitmapCurrent = new Bitmap(widget_size.ToSize().Width, widget_size.ToSize().Height);
@@ -97,21 +102,26 @@ namespace ClockWidget
 
         }
 
+        public void SetClock24h(bool value) {
+            time_24h = value;
+            timestamp_last = DateTime.MinValue;
+        }
+
         private void DrawClock(DateTime timestamp)
         {
 
             if (drawing_mutex.WaitOne(1000))
             {
                 string date = timestamp.ToString("D", CultureInfo.GetCultureInfo("en-US"));
-                string time = timestamp.ToString("HH:mm");
+                string time = time_24h ? timestamp.ToString("HH:mm") : timestamp.ToString("h:mm tt", CultureInfo.InvariantCulture);
                 using (Graphics g = Graphics.FromImage(BitmapCurrent))
                 {
                     g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
                     g.DrawImage(BitmapBackground, 0, 0, BitmapCurrent.Width, BitmapCurrent.Height);
                     SizeF str_size_date = g.MeasureString(date, FontDate);
                     g.DrawString(date, FontDate, Brushes.LightGray, (BitmapCurrent.Width - str_size_date.Width) / 2 + 5, BitmapCurrent.Height - str_size_date.Height - 10);
-                    SizeF str_size_time = g.MeasureString(time, FontTime);
-                    g.DrawString(time, FontTime, Brushes.White, (BitmapCurrent.Width - str_size_time.Width) / 2 + 10, (BitmapCurrent.Height - str_size_time.Height) / 2);
+                    SizeF str_size_time = g.MeasureString(time, time_24h ? FontTime : FontTime12h);
+                    g.DrawString(time, time_24h ? FontTime : FontTime12h, Brushes.White, (BitmapCurrent.Width - str_size_time.Width) / 2 + 10, (BitmapCurrent.Height - str_size_time.Height) / 2);
                 }
                 timestamp_last = timestamp;
                 UpdateWidget();
