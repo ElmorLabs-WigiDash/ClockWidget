@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Threading;
+using System.Windows.Controls;
 
 namespace ClockWidget
 {
@@ -26,9 +27,9 @@ namespace ClockWidget
 
         }
 
-        public void ShowSettings()
+        public UserControl GetSettingsControl()
         {
-
+            return new SettingsUserControl();
         }
 
         public void Dispose()
