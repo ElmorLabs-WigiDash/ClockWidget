@@ -86,6 +86,10 @@ namespace ClockWidget
                 FontTime12h = new Font("Basic Square 7", 80);
             }
 
+            parent.WidgetManager.LoadSetting(this.Guid, "24h", out string clock_type);
+            Boolean.TryParse(clock_type, out bool twenty_four_hours);
+            time_24h = twenty_four_hours;
+
             BitmapCurrent = new Bitmap(widget_size.ToSize().Width, widget_size.ToSize().Height);
             BitmapBackground = new Bitmap(parent.ResourcePath + "widget_506x194_grey_gradient_dithered.png");
 
@@ -104,6 +108,7 @@ namespace ClockWidget
         {
             time_24h = value;
             timestamp_last = DateTime.MinValue;
+            parent.WidgetManager.StoreSetting(this, "24h", value.ToString());
         }
 
         private void DrawClock(DateTime timestamp)
