@@ -100,7 +100,8 @@ namespace ClockWidget
 
         }
 
-        public void SetClock24h(bool value) {
+        public void SetClock24h(bool value)
+        {
             time_24h = value;
             timestamp_last = DateTime.MinValue;
         }
