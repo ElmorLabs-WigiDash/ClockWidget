@@ -108,7 +108,7 @@ namespace ClockWidget
         {
             time_24h = value;
             timestamp_last = DateTime.MinValue;
-            parent.WidgetManager.StoreSetting(this, "24h", value.ToString());
+            parent.WidgetManager.StoreSetting(this.Guid, "24h", value.ToString());
         }
 
         private void DrawClock(DateTime timestamp)
