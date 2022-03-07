@@ -66,8 +66,6 @@ namespace ClockWidget
 
         private bool time_24h = true;
 
-        public List<InstanceSetting> InstanceSettings { get; set; }
-
         public ClockWidgetInstance(ClockWidgetServer parent, WidgetSize widget_size, Guid instance_guid)
         {
 
