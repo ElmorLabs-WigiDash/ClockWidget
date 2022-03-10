@@ -13,7 +13,7 @@ namespace ClockWidget
         {
             get
             {
-                return new Guid("04E2CAFC-4BAB-4601-BD40-0D365C1C435C");
+                return new Guid(GetType().Assembly.GetName().Name);
             }
         }
         public string Name

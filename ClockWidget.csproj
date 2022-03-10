@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ClockWidget</RootNamespace>
-    <AssemblyName>Widget</AssemblyName>
+    <AssemblyName>04E2CAFC-4BAB-4601-BD40-0D365C1C435C</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -46,8 +46,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SettingsUserControl.xaml.cs">
-      <DependentUpon>SettingsUserControl.xaml</DependentUpon>
+    <Compile Include="SettingsControl.xaml.cs">
+      <DependentUpon>SettingsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="WidgetServer.cs" />
     <Compile Include="WidgetServerBase.cs" />
@@ -63,7 +63,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="SettingsUserControl.xaml">
+    <Page Include="SettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -81,6 +81,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetDir)\*" "$(SolutionDir)FrontierManager\bin\$(ConfigurationName)\net472\Widgets\04E2CAFC-4BAB-4601-BD40-0D365C1C435C\" /F /Y</PostBuildEvent>
+    <PostBuildEvent>rd /s /q "$(SolutionDir)FrontierManager\bin\$(ConfigurationName)\Widgets\$(TargetName)\"
+xcopy "$(TargetDir)\*" "$(SolutionDir)FrontierManager\bin\$(ConfigurationName)\Widgets\$(TargetName)\" /F /Y</PostBuildEvent>
   </PropertyGroup>
 </Project>

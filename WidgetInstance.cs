@@ -29,7 +29,7 @@ namespace ClockWidget
 
         public UserControl GetSettingsControl()
         {
-            return new SettingsUserControl(this);
+            return new SettingsControl(this);
         }
 
         public void Dispose()
