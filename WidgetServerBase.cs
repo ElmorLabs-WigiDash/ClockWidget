@@ -2,6 +2,7 @@
 using FrontierWidgetFramework.WidgetUtility;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace ClockWidget
 {
@@ -71,6 +72,12 @@ namespace ClockWidget
                     new WidgetSize(3, 2),
                 };
             }
+        }
+
+        public Bitmap PreviewImage { 
+            get {
+                return new Bitmap(ResourcePath + "preview_2x1.png");
+            } 
         }
 
         // Functionality
