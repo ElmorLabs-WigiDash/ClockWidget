@@ -24,7 +24,7 @@ namespace ClockWidget
 
         public void ClickEvent(ClickType click_type, int x, int y)
         {
-
+            parent.WidgetManager.OnTriggerOccurred(clicked_trigger_guid);
         }
 
         public UserControl GetSettingsControl()
@@ -66,6 +66,9 @@ namespace ClockWidget
 
         private bool time_24h = true;
 
+        private Guid clicked_trigger_guid = new Guid("F6228B98-B94B-4088-8CA6-484A36436E2A");
+        private Guid toggle_24h_action_guid = new Guid("A48F7EAC-BFB2-494E-8DB7-D5F6678B831E");
+
         public ClockWidgetInstance(ClockWidgetServer parent, WidgetSize widget_size, Guid instance_guid)
         {
 
@@ -89,6 +92,15 @@ namespace ClockWidget
             BitmapCurrent = new Bitmap(widget_size.ToSize().Width, widget_size.ToSize().Height);
             BitmapBackground = new Bitmap(parent.ResourcePath + "widget_506x194_grey_gradient_dithered.png");
 
+            // Register widget clicked
+            parent.WidgetManager.RegisterTrigger(this, clicked_trigger_guid, "Clicked");
+
+            // Register toggle time
+            parent.WidgetManager.RegisterAction(this, toggle_24h_action_guid, "Toggle 12/24h");
+
+            // Register for action events
+            parent.WidgetManager.ActionRequested += WidgetManager_ActionRequested;
+
             // Start thread
             ThreadStart thread_start = new ThreadStart(UpdateTask);
             task_thread = new Thread(thread_start);
@@ -98,6 +110,20 @@ namespace ClockWidget
             timestamp_last = DateTime.MinValue;
             task_thread.Start();
 
+        }
+
+        private void WidgetManager_ActionRequested(Guid action_guid) {
+            if(action_guid == toggle_24h_action_guid) {
+                SetClock24h(!time_24h);
+                //timestamp_last.AddMinutes(1);
+                if(drawing_mutex.WaitOne(1000)) {
+                    using(Graphics g = Graphics.FromImage(BitmapCurrent)) {
+                        g.Clear(Color.Red);
+                    }
+                    UpdateWidget();
+                    drawing_mutex.ReleaseMutex();
+                }
+            }
         }
 
         public void SetClock24h(bool value)
