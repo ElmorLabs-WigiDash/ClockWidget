@@ -82,6 +82,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>rd /s /q "$(SolutionDir)FrontierManager\bin\$(ConfigurationName)\Widgets\$(TargetName)\"
-xcopy "$(TargetDir)\*" "$(SolutionDir)FrontierManager\bin\$(ConfigurationName)\Widgets\$(TargetName)\" /F /Y</PostBuildEvent>
+xcopy "$(TargetDir)\*.dll" "$(SolutionDir)FrontierManager\bin\$(ConfigurationName)\Widgets\$(TargetName)\" /F /Y
+xcopy "$(TargetDir)\*.png" "$(SolutionDir)FrontierManager\bin\$(ConfigurationName)\Widgets\$(TargetName)\" /F /Y</PostBuildEvent>
   </PropertyGroup>
 </Project>

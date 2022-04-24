@@ -15,11 +15,11 @@ namespace ClockWidget
         // Functionality
         public void RequestUpdate()
         {
-            if (drawing_mutex.WaitOne(1000))
-            {
+            /*if (drawing_mutex.WaitOne(1000))
+            {*/
                 DrawClock(DateTime.Now);
-                drawing_mutex.ReleaseMutex();
-            }
+                //drawing_mutex.ReleaseMutex();
+            //}
         }
 
         public void ClickEvent(ClickType click_type, int x, int y)
@@ -85,7 +85,8 @@ namespace ClockWidget
             else
             {
                 FontDate = new Font("Verdana", 24, FontStyle.Bold);
-                FontTime = new Font("Basic Square 7", 100);
+                //FontTime = new Font("Basic Square 7", 100);
+                FontTime = new Font("Basic Square 7", 72);
                 FontTime12h = new Font("Basic Square 7", 80);
             }
 
@@ -138,7 +139,7 @@ namespace ClockWidget
             if (drawing_mutex.WaitOne(1000))
             {
                 string date = timestamp.ToString("D", CultureInfo.GetCultureInfo("en-US"));
-                string time = time_24h ? timestamp.ToString("HH:mm") : timestamp.ToString("h:mm tt", CultureInfo.InvariantCulture);
+                string time = time_24h ? timestamp.ToString("HH:mm:ss") : timestamp.ToString("h:mm tt", CultureInfo.InvariantCulture);
                 using (Graphics g = Graphics.FromImage(BitmapCurrent))
                 {
                     g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
@@ -167,8 +168,8 @@ namespace ClockWidget
             while (run_task)
             {
                 DateTime timestamp = DateTime.Now;
-                if (timestamp.Minute != timestamp_last.Minute || timestamp_last == DateTime.MinValue)
-                {
+                //if (timestamp.Minute != timestamp_last.Minute || timestamp_last == DateTime.MinValue)
+                if(timestamp.Second != timestamp_last.Second || timestamp_last == DateTime.MinValue) {
                     DrawClock(timestamp);
                 }
                 for (int i = 0; i < 1 || pause_task; i++)
