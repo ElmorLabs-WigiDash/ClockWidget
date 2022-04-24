@@ -15,11 +15,7 @@ namespace ClockWidget
         // Functionality
         public void RequestUpdate()
         {
-            /*if (drawing_mutex.WaitOne(1000))
-            {*/
-                DrawClock(DateTime.Now);
-                //drawing_mutex.ReleaseMutex();
-            //}
+            DrawClock(DateTime.Now);
         }
 
         public void ClickEvent(ClickType click_type, int x, int y)
