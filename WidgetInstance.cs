@@ -106,7 +106,6 @@ namespace ClockWidget
             pause_task = false;
             timestamp_last = DateTime.MinValue;
             task_thread.Start();
-
         }
 
         private void WidgetManager_ActionRequested(Guid action_guid) {
@@ -135,7 +134,7 @@ namespace ClockWidget
             if (drawing_mutex.WaitOne(1000))
             {
                 string date = timestamp.ToString("D", CultureInfo.GetCultureInfo("en-US"));
-                string time = time_24h ? timestamp.ToString("HH:mm:ss") : timestamp.ToString("h:mm tt", CultureInfo.InvariantCulture);
+                string time = time_24h ? timestamp.ToString("HH:mm") : timestamp.ToString("h:mm", CultureInfo.InvariantCulture);
                 using (Graphics g = Graphics.FromImage(BitmapCurrent))
                 {
                     g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
@@ -164,8 +163,9 @@ namespace ClockWidget
             while (run_task)
             {
                 DateTime timestamp = DateTime.Now;
-                //if (timestamp.Minute != timestamp_last.Minute || timestamp_last == DateTime.MinValue)
-                if(timestamp.Second != timestamp_last.Second || timestamp_last == DateTime.MinValue) {
+
+                if (timestamp.Minute != timestamp_last.Minute || timestamp_last == DateTime.MinValue)
+                {
                     DrawClock(timestamp);
                 }
                 for (int i = 0; i < 1 || pause_task; i++)
