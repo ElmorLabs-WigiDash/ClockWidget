@@ -135,7 +135,7 @@ namespace ClockWidget
             if (drawing_mutex.WaitOne(1000))
             {
                 string date = timestamp.ToString("D", CultureInfo.GetCultureInfo("en-US"));
-                string time = time_24h ? timestamp.ToString("HH:mm:ss") : timestamp.ToString("h:mm tt", CultureInfo.InvariantCulture);
+                string time = time_24h ? timestamp.ToString("HH:mm") : timestamp.ToString("h:mm", CultureInfo.InvariantCulture);
                 using (Graphics g = Graphics.FromImage(BitmapCurrent))
                 {
                     g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
