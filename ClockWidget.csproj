@@ -56,13 +56,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FrontierWidgetFramework\FrontierWidgetFramework.csproj">
-      <Project>{CDF074D4-34A8-42AF-83EC-6B0A06C1E387}</Project>
-      <Name>FrontierWidgetFramework</Name>
-      <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Page Include="SettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -78,6 +71,12 @@
     <Content Include="widget_506x194_grey_gradient_dithered.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\FrontierWidgetFramework\FrontierWidgetFramework.csproj">
+      <Project>{404649ad-4d43-4d04-8cd4-9d4cc1835907}</Project>
+      <Name>FrontierWidgetFramework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
