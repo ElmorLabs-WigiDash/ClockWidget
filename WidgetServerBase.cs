@@ -10,75 +10,27 @@ namespace ClockWidget
     {
 
         // Identity
-        public Guid Guid
-        {
-            get
-            {
-                return new Guid(GetType().Assembly.GetName().Name);
-            }
-        }
-        public string Name
-        {
-            get
-            {
-                return "Clock";
-            }
-        }
-        public string Description
-        {
+        public Guid Guid => new Guid(GetType().Assembly.GetName().Name);
+        public string Name => "Clock";
 
-            get
-            {
-                return "A widget displaying the current time and date";
-            }
+        public string Description => "A widget displaying the current time and date";
 
-        }
-        public string Author
-        {
-            get
-            {
-                return "Jon Sandström";
-            }
-        }
-        public string Website
-        {
-            get
-            {
-                return "https://www.elmorlabs.com/";
-            }
-        }
-        public Version Version
-        {
-            get
-            {
-                return new Version(1, 0, 0);
-            }
-        }
+        public string Author => "Jon Sandström";
+
+        public string Website => "https://www.elmorlabs.com/";
+
+        public Version Version => new Version(1, 0, 0);
 
         // Capabilities
-        public SdkVersion TargetSdk
-        {
-            get
-            {
-                return SdkVersion.Version_0;
-            }
-        }
-        public List<WidgetSize> SupportedSizes
-        {
-            get
-            {
-                return new List<WidgetSize>() {
-                    new WidgetSize(2, 1),
-                    new WidgetSize(3, 2),
-                };
-            }
-        }
+        public SdkVersion TargetSdk => SdkVersion.Version_0;
 
-        public Bitmap PreviewImage { 
-            get {
-                return new Bitmap(ResourcePath + "preview_2x1.png");
-            } 
-        }
+        public List<WidgetSize> SupportedSizes =>
+            new List<WidgetSize>() {
+                new WidgetSize(2, 1),
+                new WidgetSize(3, 2),
+            };
+
+        public Bitmap PreviewImage => new Bitmap(ResourcePath + "preview_2x1.png");
 
         // Functionality
         public IWidgetManager WidgetManager { get; set; }
