@@ -73,9 +73,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\WidgetFramework\FrontierWidgetFramework.csproj">
+    <ProjectReference Include="..\..\WidgetFramework\WidgetFramework.csproj">
       <Project>{404649ad-4d43-4d04-8cd4-9d4cc1835907}</Project>
-      <Name>FrontierWidgetFramework</Name>
+      <Name>WidgetFramework</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
