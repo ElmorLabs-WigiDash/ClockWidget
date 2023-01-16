@@ -51,19 +51,21 @@ namespace ClockWidget
         private volatile bool run_task;
         private volatile bool pause_task;
 
-        private Font FontDate;
-        private Font FontTime;
-        private Font FontTime12h;
+        public Font FontDate;
+        public Font FontTime;
         Bitmap BitmapCurrent;
         private Bitmap BitmapBackground;
         private DateTime timestamp_last;
 
         Mutex drawing_mutex = new Mutex();
 
-        private bool time_24h = true;
+        public bool time_24h = true;
 
         private Guid clicked_trigger_guid = new Guid("F6228B98-B94B-4088-8CA6-484A36436E2A");
         private Guid toggle_24h_action_guid = new Guid("A48F7EAC-BFB2-494E-8DB7-D5F6678B831E");
+
+        public Color BackgroundTint = Color.Red;
+        public int BackgroundTintOpacity = 0;
 
         public ClockWidgetInstance(ClockWidgetServer parent, WidgetSize widget_size, Guid instance_guid)
         {
@@ -75,19 +77,18 @@ namespace ClockWidget
             if (widget_size.Equals(2, 1))
             {
                 FontDate = new Font("Verdana", 18, FontStyle.Bold);
-                FontTime = new Font("Basic Square 7", 72);
-                FontTime12h = new Font("Basic Square 7", 56);
+                FontTime = new Font("Basic Square 7", 56);
             }
             else
             {
                 FontDate = new Font("Verdana", 24, FontStyle.Bold);
-                //FontTime = new Font("Basic Square 7", 100);
                 FontTime = new Font("Basic Square 7", 72);
-                FontTime12h = new Font("Basic Square 7", 80);
             }
 
             BitmapCurrent = new Bitmap(widget_size.ToSize().Width, widget_size.ToSize().Height);
             BitmapBackground = new Bitmap(parent.ResourcePath + "widget_506x194_grey_gradient_dithered.png");
+
+            LoadSettings();
 
             // Register widget clicked
             parent.WidgetManager.RegisterTrigger(this, clicked_trigger_guid, "Clicked");
@@ -139,10 +140,14 @@ namespace ClockWidget
                 {
                     g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
                     g.DrawImage(BitmapBackground, 0, 0, BitmapCurrent.Width, BitmapCurrent.Height);
+
+                    Brush warnBrush = new SolidBrush(Color.FromArgb(255 / 100 * BackgroundTintOpacity, BackgroundTint));
+                    g.FillRectangle(warnBrush, new Rectangle(0, 0, BitmapCurrent.Width, BitmapCurrent.Height));
+
                     SizeF str_size_date = g.MeasureString(date, FontDate);
                     g.DrawString(date, FontDate, Brushes.LightGray, (BitmapCurrent.Width - str_size_date.Width) / 2 + 5, BitmapCurrent.Height - str_size_date.Height - 10);
-                    SizeF str_size_time = g.MeasureString(time, time_24h ? FontTime : FontTime12h);
-                    g.DrawString(time, time_24h ? FontTime : FontTime12h, Brushes.White, (BitmapCurrent.Width - str_size_time.Width) / 2 + 10, (BitmapCurrent.Height - str_size_time.Height) / 2);
+                    SizeF str_size_time = g.MeasureString(time, FontTime);
+                    g.DrawString(time, FontTime, Brushes.White, (BitmapCurrent.Width - str_size_time.Width) / 2 + 10, (BitmapCurrent.Height - str_size_time.Height) / 2);
                 }
                 timestamp_last = timestamp;
                 UpdateWidget();
@@ -175,6 +180,37 @@ namespace ClockWidget
             }
         }
 
+        public void SaveSettings()
+        {
+            // Save setting
+            parent.WidgetManager.StoreSetting(this, nameof(BackgroundTint), ColorTranslator.ToHtml(BackgroundTint));
+            parent.WidgetManager.StoreSetting(this, nameof(BackgroundTintOpacity), BackgroundTintOpacity.ToString());
+            parent.WidgetManager.StoreSetting(this, nameof(FontDate), new FontConverter().ConvertToInvariantString(FontDate));
+            parent.WidgetManager.StoreSetting(this, nameof(FontTime), new FontConverter().ConvertToInvariantString(FontTime));
+        }
+
+        public void LoadSettings()
+        {
+            if (parent.WidgetManager.LoadSetting(this, nameof(BackgroundTint), out string bgTintStr))
+            {
+                BackgroundTint = ColorTranslator.FromHtml(bgTintStr);
+            }
+
+            if (parent.WidgetManager.LoadSetting(this, nameof(BackgroundTintOpacity), out string bgTintOpacityStr))
+            {
+                int.TryParse(bgTintOpacityStr, out BackgroundTintOpacity);
+            }
+
+            if (parent.WidgetManager.LoadSetting(this, nameof(FontDate), out var strDateFont))
+            {
+                FontDate = new FontConverter().ConvertFromInvariantString(strDateFont) as Font;
+            }
+
+            if (parent.WidgetManager.LoadSetting(this, nameof(FontTime), out var strTimeFont))
+            {
+                FontTime = new FontConverter().ConvertFromInvariantString(strTimeFont) as Font;
+            }
+        }
     }
 }
 
