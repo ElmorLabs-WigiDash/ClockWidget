@@ -1,5 +1,5 @@
-﻿using FrontierWidgetFramework;
-using FrontierWidgetFramework.WidgetUtility;
+﻿using WigiDashWidgetFramework;
+using WigiDashWidgetFramework.WidgetUtility;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
