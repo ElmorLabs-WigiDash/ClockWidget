@@ -137,22 +137,26 @@ namespace ClockWidget
                 using (Graphics g = Graphics.FromImage(BitmapCurrent))
                 {
                     g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+
+                    Brush textBrush = Brushes.White;
                     if (parent.WidgetManager.PreferGlobalTheme)
                     {
                         g.Clear(parent.WidgetManager.GlobalWidgetTheme.PrimaryBgColor);
+                        textBrush = new SolidBrush(parent.WidgetManager.GlobalWidgetTheme.PrimaryFgColor);
                     }
                     else
                     {
-                        g.Clear(Color.DimGray);
+                        Random rnd = new Random();
+                        g.Clear(Color.FromArgb(rnd.Next(0, 150), rnd.Next(0, 150), rnd.Next(0, 150)));
                     }
 
                     Brush warnBrush = new SolidBrush(Color.FromArgb(255 / 100 * BackgroundTintOpacity, BackgroundTint));
                     g.FillRectangle(warnBrush, new Rectangle(0, 0, BitmapCurrent.Width, BitmapCurrent.Height));
 
                     SizeF str_size_date = g.MeasureString(date, FontDate);
-                    g.DrawString(date, FontDate, Brushes.LightGray, (BitmapCurrent.Width - str_size_date.Width) / 2 + 5, BitmapCurrent.Height - str_size_date.Height - 10);
+                    g.DrawString(date, FontDate, textBrush, (BitmapCurrent.Width - str_size_date.Width) / 2 + 5, BitmapCurrent.Height - str_size_date.Height - 10);
                     SizeF str_size_time = g.MeasureString(time, FontTime);
-                    g.DrawString(time, FontTime, Brushes.White, (BitmapCurrent.Width - str_size_time.Width) / 2 + 10, (BitmapCurrent.Height - str_size_time.Height) / 2);
+                    g.DrawString(time, FontTime, textBrush, (BitmapCurrent.Width - str_size_time.Width) / 2 + 10, (BitmapCurrent.Height - str_size_time.Height) / 2);
                 }
                 timestamp_last = timestamp;
                 UpdateWidget();
