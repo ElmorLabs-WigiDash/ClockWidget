@@ -54,7 +54,6 @@ namespace ClockWidget
         public Font FontDate;
         public Font FontTime;
         Bitmap BitmapCurrent;
-        private Bitmap BitmapBackground;
         private DateTime timestamp_last;
 
         Mutex drawing_mutex = new Mutex();
@@ -86,7 +85,6 @@ namespace ClockWidget
             }
 
             BitmapCurrent = new Bitmap(widget_size.ToSize().Width, widget_size.ToSize().Height);
-            BitmapBackground = new Bitmap(parent.ResourcePath + "widget_506x194_grey_gradient_dithered.png");
 
             LoadSettings();
 
@@ -139,7 +137,14 @@ namespace ClockWidget
                 using (Graphics g = Graphics.FromImage(BitmapCurrent))
                 {
                     g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
-                    g.DrawImage(BitmapBackground, 0, 0, BitmapCurrent.Width, BitmapCurrent.Height);
+                    if (parent.WidgetManager.PreferGlobalTheme)
+                    {
+                        g.Clear(parent.WidgetManager.GlobalWidgetTheme.PrimaryBgColor);
+                    }
+                    else
+                    {
+                        g.Clear(Color.DimGray);
+                    }
 
                     Brush warnBrush = new SolidBrush(Color.FromArgb(255 / 100 * BackgroundTintOpacity, BackgroundTint));
                     g.FillRectangle(warnBrush, new Rectangle(0, 0, BitmapCurrent.Width, BitmapCurrent.Height));
