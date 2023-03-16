@@ -15,7 +15,11 @@ namespace ClockWidget
         // Functionality
         public void RequestUpdate()
         {
-            DrawClock(DateTime.Now);
+            if (drawing_mutex.WaitOne(1000))
+            {
+                DrawClock(DateTime.Now);
+                drawing_mutex.ReleaseMutex();
+            }
         }
 
         public void ClickEvent(ClickType click_type, int x, int y)
@@ -97,6 +101,8 @@ namespace ClockWidget
             // Register for action events
             parent.WidgetManager.ActionRequested += WidgetManager_ActionRequested;
 
+            parent.WidgetManager.GlobalThemeUpdated += WidgetManager_GlobalThemeUpdated;
+
             // Start thread
             ThreadStart thread_start = new ThreadStart(UpdateTask);
             task_thread = new Thread(thread_start);
@@ -105,6 +111,11 @@ namespace ClockWidget
             pause_task = false;
             timestamp_last = DateTime.MinValue;
             task_thread.Start();
+        }
+
+        private void WidgetManager_GlobalThemeUpdated()
+        {
+            RequestUpdate();
         }
 
         private void WidgetManager_ActionRequested(Guid action_guid) {
@@ -143,11 +154,17 @@ namespace ClockWidget
                     {
                         g.Clear(parent.WidgetManager.GlobalWidgetTheme.PrimaryBgColor);
                         textBrush = new SolidBrush(parent.WidgetManager.GlobalWidgetTheme.PrimaryFgColor);
+
+                        FontDate = new Font(parent.WidgetManager.GlobalWidgetTheme.SecondaryFont.FontFamily, FontDate.Size);
+                        FontTime = new Font(parent.WidgetManager.GlobalWidgetTheme.PrimaryFont.FontFamily, FontTime.Size);
                     }
                     else
                     {
                         Random rnd = new Random();
                         g.Clear(Color.FromArgb(rnd.Next(0, 150), rnd.Next(0, 150), rnd.Next(0, 150)));
+
+                        FontDate = new Font("Basic Square 7", FontDate.Size);
+                        FontTime = new Font("Basic Square 7", FontTime.Size);
                     }
 
                     Brush warnBrush = new SolidBrush(Color.FromArgb(255 / 100 * BackgroundTintOpacity, BackgroundTint));
