@@ -73,6 +73,8 @@
     <ProjectReference Include="..\..\WidgetFramework\WidgetFramework.csproj">
       <Project>{404649ad-4d43-4d04-8cd4-9d4cc1835907}</Project>
       <Name>WidgetFramework</Name>
+		<Private>false</Private>
+		<ExcludeAssets>all</ExcludeAssets>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
