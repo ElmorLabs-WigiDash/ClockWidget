@@ -67,8 +67,10 @@ namespace ClockWidget
         private Guid clicked_trigger_guid = new Guid("F6228B98-B94B-4088-8CA6-484A36436E2A");
         private Guid toggle_24h_action_guid = new Guid("A48F7EAC-BFB2-494E-8DB7-D5F6678B831E");
 
-        public Color BackgroundTint = Color.Red;
-        public int BackgroundTintOpacity = 0;
+        public Color DrawBackColor;
+        public Color BackColor;
+        public Color ForeColor;
+        public bool UseGlobal = false;
 
         public ClockWidgetInstance(ClockWidgetServer parent, WidgetSize widget_size, Guid instance_guid)
         {
@@ -91,6 +93,8 @@ namespace ClockWidget
             BitmapCurrent = new Bitmap(widget_size.ToSize().Width, widget_size.ToSize().Height);
 
             LoadSettings();
+
+            UpdateSettings();
 
             // Register widget clicked
             parent.WidgetManager.RegisterTrigger(this, clicked_trigger_guid, "Clicked");
@@ -115,7 +119,10 @@ namespace ClockWidget
 
         private void WidgetManager_GlobalThemeUpdated()
         {
-            RequestUpdate();
+            if (UseGlobal)
+            {
+                UpdateSettings();
+            }
         }
 
         private void WidgetManager_ActionRequested(Guid action_guid) {
@@ -149,26 +156,8 @@ namespace ClockWidget
                 {
                     g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
 
-                    Brush textBrush = Brushes.White;
-                    if (parent.WidgetManager.PreferGlobalTheme)
-                    {
-                        g.Clear(parent.WidgetManager.GlobalWidgetTheme.PrimaryBgColor);
-                        textBrush = new SolidBrush(parent.WidgetManager.GlobalWidgetTheme.PrimaryFgColor);
-
-                        FontDate = new Font(parent.WidgetManager.GlobalWidgetTheme.SecondaryFont.FontFamily, FontDate.Size);
-                        FontTime = new Font(parent.WidgetManager.GlobalWidgetTheme.PrimaryFont.FontFamily, FontTime.Size);
-                    }
-                    else
-                    {
-                        Random rnd = new Random();
-                        g.Clear(Color.FromArgb(rnd.Next(0, 150), rnd.Next(0, 150), rnd.Next(0, 150)));
-
-                        FontDate = new Font("Basic Square 7", FontDate.Size);
-                        FontTime = new Font("Basic Square 7", FontTime.Size);
-                    }
-
-                    Brush warnBrush = new SolidBrush(Color.FromArgb(255 / 100 * BackgroundTintOpacity, BackgroundTint));
-                    g.FillRectangle(warnBrush, new Rectangle(0, 0, BitmapCurrent.Width, BitmapCurrent.Height));
+                    g.Clear(DrawBackColor);
+                    Brush textBrush = new SolidBrush(ForeColor);
 
                     SizeF str_size_date = g.MeasureString(date, FontDate);
                     g.DrawString(date, FontDate, textBrush, (BitmapCurrent.Width - str_size_date.Width) / 2 + 5, BitmapCurrent.Height - str_size_date.Height - 10);
@@ -209,22 +198,29 @@ namespace ClockWidget
         public void SaveSettings()
         {
             // Save setting
-            parent.WidgetManager.StoreSetting(this, nameof(BackgroundTint), ColorTranslator.ToHtml(BackgroundTint));
-            parent.WidgetManager.StoreSetting(this, nameof(BackgroundTintOpacity), BackgroundTintOpacity.ToString());
+            parent.WidgetManager.StoreSetting(this, nameof(UseGlobal), UseGlobal.ToString());
+            parent.WidgetManager.StoreSetting(this, nameof(BackColor), ColorTranslator.ToHtml(BackColor));
             parent.WidgetManager.StoreSetting(this, nameof(FontDate), new FontConverter().ConvertToInvariantString(FontDate));
             parent.WidgetManager.StoreSetting(this, nameof(FontTime), new FontConverter().ConvertToInvariantString(FontTime));
         }
 
         public void LoadSettings()
         {
-            if (parent.WidgetManager.LoadSetting(this, nameof(BackgroundTint), out string bgTintStr))
+            if (parent.WidgetManager.LoadSetting(this, nameof (UseGlobal), out string useGlobalStr))
             {
-                BackgroundTint = ColorTranslator.FromHtml(bgTintStr);
+                UseGlobal = bool.Parse(useGlobalStr);
+            } else
+            {
+                UseGlobal = parent.WidgetManager.PreferGlobalTheme;
             }
 
-            if (parent.WidgetManager.LoadSetting(this, nameof(BackgroundTintOpacity), out string bgTintOpacityStr))
+            if (parent.WidgetManager.LoadSetting(this, nameof(BackColor), out string bgTintStr))
             {
-                int.TryParse(bgTintOpacityStr, out BackgroundTintOpacity);
+                BackColor = ColorTranslator.FromHtml(bgTintStr);
+            } else
+            {
+                Random rnd = new Random();
+                BackColor = Color.FromArgb(rnd.Next(0, 150), rnd.Next(0, 150), rnd.Next(0, 150));
             }
 
             if (parent.WidgetManager.LoadSetting(this, nameof(FontDate), out var strDateFont))
@@ -236,6 +232,24 @@ namespace ClockWidget
             {
                 FontTime = new FontConverter().ConvertFromInvariantString(strTimeFont) as Font;
             }
+        }
+
+        public void UpdateSettings()
+        {
+            if (UseGlobal)
+            {
+                DrawBackColor = parent.WidgetManager.GlobalWidgetTheme.PrimaryBgColor;
+                ForeColor = parent.WidgetManager.GlobalWidgetTheme.PrimaryFgColor;
+                FontDate = new Font(parent.WidgetManager.GlobalWidgetTheme.SecondaryFont.FontFamily, FontDate.Size);
+                FontTime = new Font(parent.WidgetManager.GlobalWidgetTheme.PrimaryFont.FontFamily, FontTime.Size);
+            }
+            else
+            {
+                DrawBackColor = BackColor;
+                ForeColor = Color.White;
+            }
+
+            RequestUpdate();
         }
     }
 }

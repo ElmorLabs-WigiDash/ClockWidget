@@ -28,6 +28,7 @@ namespace ClockWidget
 
             InitializeComponent();
 
+            useGlobalChk.IsChecked = parent.UseGlobal;
             checkbox24h.IsChecked = parent.time_24h;
 
             dateFontSelect.Tag = parent.FontDate;
@@ -36,9 +37,7 @@ namespace ClockWidget
             timeFontSelect.Tag = parent.FontTime;
             timeFontSelect.Content = new FontConverter().ConvertToInvariantString(parent.FontTime);
 
-            bgColorSelect.Content = ColorTranslator.ToHtml(parent.BackgroundTint);
-
-            tintOpacitySelect.Text = parent.BackgroundTintOpacity.ToString();
+            bgColorSelect.Content = ColorTranslator.ToHtml(parent.BackColor);
         }
 
         private void dateFontSelect_Click(object sender, RoutedEventArgs e)
@@ -75,38 +74,17 @@ namespace ClockWidget
             }
         }
 
-        private void tintOpacitySelect_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (!int.TryParse(tintOpacitySelect.Text, out int parsedInput))
-            {
-                tintOpacitySelect.Text = parsedInput.ToString();
-                return;
-            }
-
-            if (parsedInput <= 100 && parsedInput >= 0)
-            {
-                lastValidIntInput = parsedInput;
-            } else if (parsedInput > 100)
-            {
-                lastValidIntInput = 100;
-                tintOpacitySelect.Text = "100";
-            } else
-            {
-                lastValidIntInput = 0;
-                tintOpacitySelect.Text = "0";
-            }
-        }
-
         private void buttonApply_Click(object sender, RoutedEventArgs e)
         {
+            parent.UseGlobal = useGlobalChk.IsChecked ?? false;
             parent.SetClock24h(checkbox24h.IsChecked ?? false);
 
-            parent.BackgroundTint = ColorTranslator.FromHtml(bgColorSelect.Content as string);
-            parent.BackgroundTintOpacity = lastValidIntInput;
+            parent.BackColor = ColorTranslator.FromHtml(bgColorSelect.Content as string);
 
             parent.FontDate = dateFontSelect.Tag as Font;
             parent.FontTime = timeFontSelect.Tag as Font;
 
+            parent.UpdateSettings();
             parent.SaveSettings();
         }
     }
