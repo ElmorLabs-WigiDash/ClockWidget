@@ -74,7 +74,6 @@ namespace ClockWidget
 
         public ClockWidgetInstance(ClockWidgetServer parent, WidgetSize widget_size, Guid instance_guid)
         {
-
             this.parent = parent;
             this.WidgetSize = widget_size;
             this.Guid = instance_guid;
