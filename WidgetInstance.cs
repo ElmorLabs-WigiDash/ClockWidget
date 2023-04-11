@@ -239,8 +239,8 @@ namespace ClockWidget
             {
                 DrawBackColor = parent.WidgetManager.GlobalWidgetTheme.PrimaryBgColor;
                 ForeColor = parent.WidgetManager.GlobalWidgetTheme.PrimaryFgColor;
-                FontDate = new Font(parent.WidgetManager.GlobalWidgetTheme.SecondaryFont.FontFamily, FontDate.Size);
-                FontTime = new Font(parent.WidgetManager.GlobalWidgetTheme.PrimaryFont.FontFamily, FontTime.Size);
+                FontDate = new Font(parent.WidgetManager.GlobalWidgetTheme.SecondaryFont.FontFamily, FontDate.Size, FontDate.Style);
+                FontTime = new Font(parent.WidgetManager.GlobalWidgetTheme.PrimaryFont.FontFamily, FontTime.Size, FontTime.Style);
             }
             else
             {
