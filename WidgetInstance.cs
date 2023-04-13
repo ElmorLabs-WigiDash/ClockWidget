@@ -149,7 +149,7 @@ namespace ClockWidget
 
             if (drawing_mutex.WaitOne(1000))
             {
-                string date = timestamp.ToString("D", CultureInfo.GetCultureInfo("en-US"));
+                string date = timestamp.ToString("ddd, MMM. d, yyyy", CultureInfo.GetCultureInfo("en-US"));
                 string time = time_24h ? timestamp.ToString("HH:mm") : timestamp.ToString("h:mm", CultureInfo.InvariantCulture);
                 using (Graphics g = Graphics.FromImage(BitmapCurrent))
                 {
