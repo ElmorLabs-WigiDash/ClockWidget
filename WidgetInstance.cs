@@ -47,7 +47,6 @@ namespace ClockWidget
         {
             pause_task = false;
             timestamp_last = DateTime.MinValue;
-            RequestUpdate();
         }
 
         // Class specific
