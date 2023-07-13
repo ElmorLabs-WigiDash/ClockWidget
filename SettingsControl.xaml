@@ -26,19 +26,17 @@
             <Button x:Name="timeFontSelect" Grid.Column="1" Click="timeFontSelect_Click" HorizontalAlignment="Stretch"></Button>
         </Grid>
 
-        <CheckBox x:Name="checkbox24h"  Height="20" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="6, 2" Content="Use 24h Time" FontSize="10"/>
-
         <Grid Margin="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Label Content="Background Color" FontSize="10" HorizontalAlignment="Stretch"/>
+            <Label Content="Background" FontSize="10" HorizontalAlignment="Stretch"/>
             <Button x:Name="bgColorSelect" Grid.Column="1" Click="bgColorSelect_Click" HorizontalAlignment="Stretch"></Button>
         </Grid>
-        
-        <CheckBox x:Name="useGlobalChk"  Height="20" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="6, 2" Content="Use Global Theme" FontSize="10"/>
-        
-        <Button x:Name="buttonApply" Content="Save" Click="buttonApply_Click" Margin="2" Width="220" Background="{DynamicResource PrimaryBrush}"/>
+
+        <CheckBox x:Name="useGlobalChk"  Height="20" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="6, 2" Content="Use Global Theme" FontSize="10" Click="useGlobalChk_Click"/>
+
+        <CheckBox x:Name="checkbox24h"  Height="20" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="6, 2" Content="Use 24h Time" FontSize="10" Click="checkbox24h_Click"/>
     </StackPanel>
 </UserControl>

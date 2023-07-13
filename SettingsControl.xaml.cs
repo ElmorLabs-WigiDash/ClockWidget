@@ -38,6 +38,7 @@ namespace ClockWidget
             timeFontSelect.Content = new FontConverter().ConvertToInvariantString(parent.FontTime);
 
             bgColorSelect.Content = ColorTranslator.ToHtml(parent.BackColor);
+            bgColorSelect.IsEnabled = !parent.UseGlobal;
         }
 
         private void dateFontSelect_Click(object sender, RoutedEventArgs e)
@@ -50,6 +51,11 @@ namespace ClockWidget
                 caller.Content = new FontConverter().ConvertToInvariantString(selectedFont);
                 caller.Tag = selectedFont;
             }
+
+            parent.FontDate = dateFontSelect.Tag as Font;
+
+            parent.UpdateSettings();
+            parent.SaveSettings();
         }
 
         private void timeFontSelect_Click(object sender, RoutedEventArgs e)
@@ -62,6 +68,11 @@ namespace ClockWidget
                 caller.Content = new FontConverter().ConvertToInvariantString(selectedFont);
                 caller.Tag = selectedFont;
             }
+
+            parent.FontTime = timeFontSelect.Tag as Font;
+
+            parent.UpdateSettings();
+            parent.SaveSettings();
         }
 
         private void bgColorSelect_Click(object sender, RoutedEventArgs e)
@@ -72,18 +83,25 @@ namespace ClockWidget
                 Color selectedColor = parent.WidgetObject.WidgetManager.RequestColorSelection(defaultColor);
                 caller.Content = ColorTranslator.ToHtml(selectedColor);
             }
-        }
-
-        private void buttonApply_Click(object sender, RoutedEventArgs e)
-        {
-            parent.UseGlobal = useGlobalChk.IsChecked ?? false;
-            parent.SetClock24h(checkbox24h.IsChecked ?? false);
 
             parent.BackColor = ColorTranslator.FromHtml(bgColorSelect.Content as string);
 
-            parent.FontDate = dateFontSelect.Tag as Font;
-            parent.FontTime = timeFontSelect.Tag as Font;
+            parent.UpdateSettings();
+            parent.SaveSettings();
+        }
 
+        private void useGlobalChk_Click(object sender, RoutedEventArgs e)
+        {
+            parent.UseGlobal = useGlobalChk.IsChecked ?? false;
+            bgColorSelect.IsEnabled = !parent.UseGlobal;
+
+            parent.UpdateSettings();
+            parent.SaveSettings();
+        }
+
+        private void checkbox24h_Click(object sender, RoutedEventArgs e)
+        {
+            parent.SetClock24h(checkbox24h.IsChecked ?? false);
             parent.UpdateSettings();
             parent.SaveSettings();
         }
