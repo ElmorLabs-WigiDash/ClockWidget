@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -9,6 +8,7 @@ using System.Resources;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Drawing;
 
 namespace ClockWidget
 {
@@ -31,19 +31,21 @@ namespace ClockWidget
             useGlobalChk.IsChecked = parent.UseGlobal;
             checkbox24h.IsChecked = parent.time_24h;
 
-            dateFontSelect.Tag = parent.FontDate;
-            dateFontSelect.Content = new FontConverter().ConvertToInvariantString(parent.FontDate);
+            dateFontSelect.Tag = parent.UserFontDate;
+            dateFontSelect.Content = new FontConverter().ConvertToInvariantString(parent.UserFontDate);
+            dateFontSelect.IsEnabled = !parent.UseGlobal;
 
-            timeFontSelect.Tag = parent.FontTime;
-            timeFontSelect.Content = new FontConverter().ConvertToInvariantString(parent.FontTime);
+            timeFontSelect.Tag = parent.UserFontTime;
+            timeFontSelect.Content = new FontConverter().ConvertToInvariantString(parent.UserFontTime);
+            timeFontSelect.IsEnabled = !parent.UseGlobal;
 
-            bgColorSelect.Content = ColorTranslator.ToHtml(parent.BackColor);
+            bgColorSelect.Content = ColorTranslator.ToHtml(parent.UserBackColor);
             bgColorSelect.IsEnabled = !parent.UseGlobal;
         }
 
         private void dateFontSelect_Click(object sender, RoutedEventArgs e)
         {
-            Font defaultFont = parent.FontDate;
+            Font defaultFont = parent.UserFontDate;
             Font selectedFont = parent.WidgetObject.WidgetManager.RequestFontSelection(defaultFont);
 
             if (sender is Button caller)
@@ -52,7 +54,7 @@ namespace ClockWidget
                 caller.Tag = selectedFont;
             }
 
-            parent.FontDate = dateFontSelect.Tag as Font;
+            parent.UserFontDate = dateFontSelect.Tag as Font;
 
             parent.UpdateSettings();
             parent.SaveSettings();
@@ -60,7 +62,7 @@ namespace ClockWidget
 
         private void timeFontSelect_Click(object sender, RoutedEventArgs e)
         {
-            Font defaultFont = parent.FontTime;
+            Font defaultFont = parent.UserFontTime;
             Font selectedFont = parent.WidgetObject.WidgetManager.RequestFontSelection(defaultFont);
 
             if (sender is Button caller)
@@ -69,7 +71,7 @@ namespace ClockWidget
                 caller.Tag = selectedFont;
             }
 
-            parent.FontTime = timeFontSelect.Tag as Font;
+            parent.UserFontTime = timeFontSelect.Tag as Font;
 
             parent.UpdateSettings();
             parent.SaveSettings();
@@ -84,7 +86,7 @@ namespace ClockWidget
                 caller.Content = ColorTranslator.ToHtml(selectedColor);
             }
 
-            parent.BackColor = ColorTranslator.FromHtml(bgColorSelect.Content as string);
+            parent.UserBackColor = ColorTranslator.FromHtml(bgColorSelect.Content as string);
 
             parent.UpdateSettings();
             parent.SaveSettings();
@@ -94,6 +96,8 @@ namespace ClockWidget
         {
             parent.UseGlobal = useGlobalChk.IsChecked ?? false;
             bgColorSelect.IsEnabled = !parent.UseGlobal;
+            dateFontSelect.IsEnabled = !parent.UseGlobal;
+            timeFontSelect.IsEnabled = !parent.UseGlobal;
 
             parent.UpdateSettings();
             parent.SaveSettings();

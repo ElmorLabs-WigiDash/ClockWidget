@@ -55,8 +55,10 @@ namespace ClockWidget
         private volatile bool run_task;
         private volatile bool pause_task;
 
-        public Font FontDate;
-        public Font FontTime;
+        public Font DrawFontDate;
+        public Font UserFontDate;
+        public Font DrawFontTime;
+        public Font UserFontTime;
         Bitmap BitmapCurrent;
         private DateTime timestamp_last;
 
@@ -68,8 +70,9 @@ namespace ClockWidget
         private Guid toggle_24h_action_guid = new Guid("A48F7EAC-BFB2-494E-8DB7-D5F6678B831E");
 
         public Color DrawBackColor;
-        public Color BackColor;
-        public Color ForeColor;
+        public Color UserBackColor;
+        public Color DrawForeColor;
+        public Color UserForeColor;
         public bool UseGlobal = false;
 
         public ClockWidgetInstance(ClockWidgetServer parent, WidgetSize widget_size, Guid instance_guid)
@@ -80,13 +83,13 @@ namespace ClockWidget
 
             if (widget_size.Equals(2, 1))
             {
-                FontDate = new Font("Verdana", 18, FontStyle.Bold);
-                FontTime = new Font("Basic Square 7", 56);
+                DrawFontDate = new Font("Verdana", 18, FontStyle.Bold);
+                DrawFontTime = new Font("Basic Square 7", 56);
             }
             else
             {
-                FontDate = new Font("Verdana", 24, FontStyle.Bold);
-                FontTime = new Font("Basic Square 7", 72);
+                DrawFontDate = new Font("Verdana", 24, FontStyle.Bold);
+                DrawFontTime = new Font("Basic Square 7", 72);
             }
 
             BitmapCurrent = new Bitmap(widget_size.ToSize().Width, widget_size.ToSize().Height);
@@ -158,12 +161,12 @@ namespace ClockWidget
                     g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
 
                     g.Clear(DrawBackColor);
-                    Brush textBrush = new SolidBrush(ForeColor);
+                    Brush textBrush = new SolidBrush(DrawForeColor);
 
-                    SizeF str_size_date = g.MeasureString(date, FontDate);
-                    g.DrawString(date, FontDate, textBrush, (BitmapCurrent.Width - str_size_date.Width) / 2 + 5, BitmapCurrent.Height - str_size_date.Height - 10);
-                    SizeF str_size_time = g.MeasureString(time, FontTime);
-                    g.DrawString(time, FontTime, textBrush, (BitmapCurrent.Width - str_size_time.Width) / 2 + 10, (BitmapCurrent.Height - str_size_time.Height) / 2);
+                    SizeF str_size_date = g.MeasureString(date, DrawFontDate);
+                    g.DrawString(date, DrawFontDate, textBrush, (BitmapCurrent.Width - str_size_date.Width) / 2 + 5, BitmapCurrent.Height - str_size_date.Height - 10);
+                    SizeF str_size_time = g.MeasureString(time, DrawFontTime);
+                    g.DrawString(time, DrawFontTime, textBrush, (BitmapCurrent.Width - str_size_time.Width) / 2 + 10, (BitmapCurrent.Height - str_size_time.Height) / 2);
                 }
                 timestamp_last = timestamp;
                 UpdateWidget();
@@ -200,9 +203,9 @@ namespace ClockWidget
         {
             // Save setting
             parent.WidgetManager.StoreSetting(this, nameof(UseGlobal), UseGlobal.ToString());
-            parent.WidgetManager.StoreSetting(this, nameof(BackColor), ColorTranslator.ToHtml(BackColor));
-            parent.WidgetManager.StoreSetting(this, nameof(FontDate), new FontConverter().ConvertToInvariantString(FontDate));
-            parent.WidgetManager.StoreSetting(this, nameof(FontTime), new FontConverter().ConvertToInvariantString(FontTime));
+            parent.WidgetManager.StoreSetting(this, nameof(UserBackColor), ColorTranslator.ToHtml(UserBackColor));
+            parent.WidgetManager.StoreSetting(this, nameof(DrawFontDate), new FontConverter().ConvertToInvariantString(DrawFontDate));
+            parent.WidgetManager.StoreSetting(this, nameof(DrawFontTime), new FontConverter().ConvertToInvariantString(DrawFontTime));
         }
 
         public void LoadSettings()
@@ -215,23 +218,38 @@ namespace ClockWidget
                 UseGlobal = parent.WidgetManager.PreferGlobalTheme;
             }
 
-            if (parent.WidgetManager.LoadSetting(this, nameof(BackColor), out string bgTintStr))
+            if (parent.WidgetManager.LoadSetting(this, nameof(UserBackColor), out string bgTintStr))
             {
-                BackColor = ColorTranslator.FromHtml(bgTintStr);
+                UserBackColor = ColorTranslator.FromHtml(bgTintStr);
             } else
             {
                 Random rnd = new Random();
-                BackColor = Color.FromArgb(rnd.Next(0, 150), rnd.Next(0, 150), rnd.Next(0, 150));
+                UserBackColor = Color.FromArgb(rnd.Next(0, 150), rnd.Next(0, 150), rnd.Next(0, 150));
             }
 
-            if (parent.WidgetManager.LoadSetting(this, nameof(FontDate), out var strDateFont))
+            if (parent.WidgetManager.LoadSetting(this, nameof(UserForeColor), out string fgColorStr))
             {
-                FontDate = new FontConverter().ConvertFromInvariantString(strDateFont) as Font;
+                UserForeColor = ColorTranslator.FromHtml(fgColorStr);
+            }
+            else
+            {
+                UserForeColor = Color.FromArgb(255 - UserBackColor.R, 255 - UserBackColor.G, 255 - UserBackColor.B);
             }
 
-            if (parent.WidgetManager.LoadSetting(this, nameof(FontTime), out var strTimeFont))
+            if (parent.WidgetManager.LoadSetting(this, nameof(UserFontDate), out var strDateFont))
             {
-                FontTime = new FontConverter().ConvertFromInvariantString(strTimeFont) as Font;
+                UserFontDate = new FontConverter().ConvertFromInvariantString(strDateFont) as Font;
+            } else
+            {
+                UserFontDate = DrawFontDate;
+            }
+
+            if (parent.WidgetManager.LoadSetting(this, nameof(UserFontTime), out var strTimeFont))
+            {
+                UserFontTime = new FontConverter().ConvertFromInvariantString(strTimeFont) as Font;
+            } else
+            {
+                UserFontTime = DrawFontTime;
             }
         }
 
@@ -240,14 +258,16 @@ namespace ClockWidget
             if (UseGlobal)
             {
                 DrawBackColor = parent.WidgetManager.GlobalWidgetTheme.PrimaryBgColor;
-                ForeColor = parent.WidgetManager.GlobalWidgetTheme.PrimaryFgColor;
-                FontDate = new Font(parent.WidgetManager.GlobalWidgetTheme.SecondaryFont.FontFamily, FontDate.Size, FontDate.Style);
-                FontTime = new Font(parent.WidgetManager.GlobalWidgetTheme.PrimaryFont.FontFamily, FontTime.Size, FontTime.Style);
+                DrawForeColor = parent.WidgetManager.GlobalWidgetTheme.PrimaryFgColor;
+                DrawFontDate = new Font(parent.WidgetManager.GlobalWidgetTheme.SecondaryFont.FontFamily, DrawFontDate.Size, DrawFontDate.Style);
+                DrawFontTime = new Font(parent.WidgetManager.GlobalWidgetTheme.PrimaryFont.FontFamily, DrawFontTime.Size, DrawFontTime.Style);
             }
             else
             {
-                DrawBackColor = BackColor;
-                ForeColor = Color.White;
+                DrawBackColor = UserBackColor;
+                DrawForeColor = UserForeColor;
+                DrawFontDate = UserFontDate;
+                DrawFontTime = UserFontTime;
             }
 
             RequestUpdate();
