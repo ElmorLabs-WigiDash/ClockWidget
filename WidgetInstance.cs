@@ -27,9 +27,10 @@ namespace ClockWidget
             parent.WidgetManager.OnTriggerOccurred(clicked_trigger_guid);
         }
 
+        private SettingsControl settingsControl;
         public UserControl GetSettingsControl()
         {
-            return new SettingsControl(this);
+            return settingsControl;
         }
 
         public void Dispose()
@@ -91,6 +92,8 @@ namespace ClockWidget
             BitmapCurrent = new Bitmap(widget_size.ToSize().Width, widget_size.ToSize().Height);
 
             LoadSettings();
+
+            settingsControl = new SettingsControl(this);
 
             UpdateSettings();
 
