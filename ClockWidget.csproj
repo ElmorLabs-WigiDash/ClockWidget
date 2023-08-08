@@ -73,14 +73,14 @@
     <ProjectReference Include="..\..\WidgetFramework\WidgetFramework.csproj">
       <Project>{404649ad-4d43-4d04-8cd4-9d4cc1835907}</Project>
       <Name>WidgetFramework</Name>
-		<Private>false</Private>
-		<ExcludeAssets>all</ExcludeAssets>
+      <Private>false</Private>
+      <ExcludeAssets>all</ExcludeAssets>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>rd /s /q "$(SolutionDir)Manager\bin\$(ConfigurationName)\Widgets\$(TargetName)\"
-xcopy "$(TargetDir)\*.dll" "$(SolutionDir)Manager\bin\$(ConfigurationName)\Widgets\$(TargetName)\" /F /Y
-xcopy "$(TargetDir)\*.png" "$(SolutionDir)Manager\bin\$(ConfigurationName)\Widgets\$(TargetName)\" /F /Y</PostBuildEvent>
+    <PostBuildEvent>rd /s /q "$(SolutionDir)Manager\bin\$(ConfigurationName)\DefaultWidgets\$(TargetName)\"
+xcopy "$(TargetDir)\*.dll" "$(SolutionDir)Manager\bin\$(ConfigurationName)\DefaultWidgets\$(TargetName)\" /F /Y
+xcopy "$(TargetDir)\*.png" "$(SolutionDir)Manager\bin\$(ConfigurationName)\DefaultWidgets\$(TargetName)\" /F /Y</PostBuildEvent>
   </PropertyGroup>
 </Project>
