@@ -192,9 +192,10 @@ namespace ClockWidget
                 {
                     DrawClock(timestamp);
                 }
-                for (int i = 0; i < 1 || pause_task; i++)
+                for (int i = 0; i < 1 * 5 || pause_task; i++)
                 {
-                    Thread.Sleep(500);
+                    if (!run_task) return;
+                    Thread.Sleep(100);
                 }
             }
         }
