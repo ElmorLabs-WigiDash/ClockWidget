@@ -41,6 +41,9 @@ namespace ClockWidget
 
             bgColorSelect.Content = ColorTranslator.ToHtml(parent.UserBackColor);
             bgColorSelect.IsEnabled = !parent.UseGlobal;
+
+            fgColorSelect.Content = ColorTranslator.ToHtml(parent.UserForeColor);
+            fgColorSelect.IsEnabled = !parent.UseGlobal;
         }
 
         private void dateFontSelect_Click(object sender, RoutedEventArgs e)
@@ -77,6 +80,21 @@ namespace ClockWidget
             parent.SaveSettings();
         }
 
+        private void fgColorSelect_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button caller)
+            {
+                Color defaultColor = ColorTranslator.FromHtml(caller.Content.ToString());
+                Color selectedColor = parent.WidgetObject.WidgetManager.RequestColorSelection(defaultColor);
+                caller.Content = ColorTranslator.ToHtml(selectedColor);
+            }
+
+            parent.UserForeColor = ColorTranslator.FromHtml(fgColorSelect.Content as string);
+
+            parent.UpdateSettings();
+            parent.SaveSettings();
+        }
+
         private void bgColorSelect_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button caller)
@@ -95,7 +113,9 @@ namespace ClockWidget
         private void useGlobalChk_Click(object sender, RoutedEventArgs e)
         {
             parent.UseGlobal = useGlobalChk.IsChecked ?? false;
+
             bgColorSelect.IsEnabled = !parent.UseGlobal;
+            fgColorSelect.IsEnabled = !parent.UseGlobal;
             dateFontSelect.IsEnabled = !parent.UseGlobal;
             timeFontSelect.IsEnabled = !parent.UseGlobal;
 

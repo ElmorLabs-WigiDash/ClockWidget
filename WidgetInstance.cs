@@ -205,6 +205,7 @@ namespace ClockWidget
             // Save setting
             parent.WidgetManager.StoreSetting(this, nameof(UseGlobal), UseGlobal.ToString());
             parent.WidgetManager.StoreSetting(this, nameof(UserBackColor), ColorTranslator.ToHtml(UserBackColor));
+            parent.WidgetManager.StoreSetting(this, nameof(UserForeColor), ColorTranslator.ToHtml(UserForeColor));
             parent.WidgetManager.StoreSetting(this, nameof(DrawFontDate), new FontConverter().ConvertToInvariantString(DrawFontDate));
             parent.WidgetManager.StoreSetting(this, nameof(DrawFontTime), new FontConverter().ConvertToInvariantString(DrawFontTime));
         }
