@@ -134,9 +134,6 @@ namespace ClockWidget
                 SetClock24h(!time_24h);
                 //timestamp_last.AddMinutes(1);
                 if(drawing_mutex.WaitOne(1000)) {
-                    using(Graphics g = Graphics.FromImage(BitmapCurrent)) {
-                        g.Clear(Color.Red);
-                    }
                     UpdateWidget();
                     drawing_mutex.ReleaseMutex();
                 }
