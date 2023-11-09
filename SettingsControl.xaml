@@ -7,45 +7,44 @@
              mc:Ignorable="d"
              d:Background="White"
              d:DesignHeight="240" d:DesignWidth="225" Margin="10, 25">
-    <StackPanel>
-        <Grid Margin="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Label Content="Date Font" FontSize="10" HorizontalAlignment="Stretch"/>
-            <Button x:Name="dateFontSelect" Grid.Column="1" Click="dateFontSelect_Click"  HorizontalAlignment="Stretch"></Button>
-        </Grid>
+  <StackPanel>
+    <CheckBox x:Name="useGlobalChk"  Height="20" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="6, 2" Content="Use Global Theme" FontSize="10" Click="useGlobalChk_Click"/>
+    <CheckBox x:Name="checkbox24h"  Height="20" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="6, 2" Content="Use 24h Time" FontSize="10" Click="checkbox24h_Click"/>
 
-        <Grid Margin="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Label Content="Time Font" FontSize="10" HorizontalAlignment="Stretch"/>
-            <Button x:Name="timeFontSelect" Grid.Column="1" Click="timeFontSelect_Click" HorizontalAlignment="Stretch"></Button>
-        </Grid>
+    <Grid Margin="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="100"></ColumnDefinition>
+        <ColumnDefinition></ColumnDefinition>
+      </Grid.ColumnDefinitions>
+      <Label Content="Date Font" FontSize="10" HorizontalAlignment="Stretch"/>
+      <Button x:Name="dateFontSelect" Grid.Column="1" Click="dateFontSelect_Click"  HorizontalAlignment="Stretch"></Button>
+    </Grid>
 
-        <Grid Margin="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Label Content="Foreground Color" FontSize="10" HorizontalAlignment="Stretch"/>
-            <Button x:Name="fgColorSelect" Grid.Column="1" Click="fgColorSelect_Click" HorizontalAlignment="Stretch"></Button>
-        </Grid>
+    <Grid Margin="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="100"></ColumnDefinition>
+        <ColumnDefinition></ColumnDefinition>
+      </Grid.ColumnDefinitions>
+      <Label Content="Time Font" FontSize="10" HorizontalAlignment="Stretch"/>
+      <Button x:Name="timeFontSelect" Grid.Column="1" Click="timeFontSelect_Click" HorizontalAlignment="Stretch"></Button>
+    </Grid>
 
-        <Grid Margin="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Label Content="Background Color" FontSize="10" HorizontalAlignment="Stretch"/>
-            <Button x:Name="bgColorSelect" Grid.Column="1" Click="bgColorSelect_Click" HorizontalAlignment="Stretch"></Button>
-        </Grid>
+    <Grid Margin="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="100"></ColumnDefinition>
+        <ColumnDefinition></ColumnDefinition>
+      </Grid.ColumnDefinitions>
+      <Label Content="Foreground Color" FontSize="10" HorizontalAlignment="Stretch"/>
+      <Button x:Name="fgColorSelect" Grid.Column="1" Click="fgColorSelect_Click" HorizontalAlignment="Stretch"></Button>
+    </Grid>
 
-        <CheckBox x:Name="useGlobalChk"  Height="20" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="6, 2" Content="Use Global Theme" FontSize="10" Click="useGlobalChk_Click"/>
-
-        <CheckBox x:Name="checkbox24h"  Height="20" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="6, 2" Content="Use 24h Time" FontSize="10" Click="checkbox24h_Click"/>
-    </StackPanel>
+    <Grid Margin="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="100"></ColumnDefinition>
+        <ColumnDefinition></ColumnDefinition>
+      </Grid.ColumnDefinitions>
+      <Label Content="Background Color" FontSize="10" HorizontalAlignment="Stretch"/>
+      <Button x:Name="bgColorSelect" Grid.Column="1" Click="bgColorSelect_Click" HorizontalAlignment="Stretch"></Button>
+    </Grid>
+  </StackPanel>
 </UserControl>
