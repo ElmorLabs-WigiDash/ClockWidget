@@ -201,6 +201,7 @@ namespace ClockWidget
         {
             // Save setting
             parent.WidgetManager.StoreSetting(this, nameof(UseGlobal), UseGlobal.ToString());
+            parent.WidgetManager.StoreSetting(this, "Use24h", time_24h.ToString());
             parent.WidgetManager.StoreSetting(this, nameof(UserBackColor), ColorTranslator.ToHtml(UserBackColor));
             parent.WidgetManager.StoreSetting(this, nameof(UserForeColor), ColorTranslator.ToHtml(UserForeColor));
             parent.WidgetManager.StoreSetting(this, nameof(DrawFontDate), new FontConverter().ConvertToInvariantString(DrawFontDate));
@@ -215,6 +216,11 @@ namespace ClockWidget
             } else
             {
                 UseGlobal = parent.WidgetManager.PreferGlobalTheme;
+            }
+
+            if (parent.WidgetManager.LoadSetting(this, "Use24h", out string use24hStr))
+            {
+                SetClock24h(bool.Parse(use24hStr));
             }
 
             if (parent.WidgetManager.LoadSetting(this, nameof(UserBackColor), out string bgTintStr))
