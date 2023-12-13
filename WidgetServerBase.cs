@@ -13,11 +13,11 @@ namespace ClockWidget
         public Guid Guid => new Guid(GetType().Assembly.GetName().Name);
         public string Name => "Clock";
 
-        public string Description => "A widget displaying the current time and date";
+        public string Description => "Display the current time and date";
 
-        public string Author => "Jon Sandström";
+        public string Author => "ElmorLabs";
 
-        public string Website => "https://www.elmorlabs.com/";
+        public string Website => "https://elmorlabs.com/";
 
         public Version Version => new Version(1, 0, 0);
 
