@@ -204,8 +204,8 @@ namespace ClockWidget
             parent.WidgetManager.StoreSetting(this, "Use24h", time_24h.ToString());
             parent.WidgetManager.StoreSetting(this, nameof(UserBackColor), ColorTranslator.ToHtml(UserBackColor));
             parent.WidgetManager.StoreSetting(this, nameof(UserForeColor), ColorTranslator.ToHtml(UserForeColor));
-            parent.WidgetManager.StoreSetting(this, nameof(DrawFontDate), new FontConverter().ConvertToInvariantString(DrawFontDate));
-            parent.WidgetManager.StoreSetting(this, nameof(DrawFontTime), new FontConverter().ConvertToInvariantString(DrawFontTime));
+            parent.WidgetManager.StoreSetting(this, nameof(UserFontDate), new FontConverter().ConvertToInvariantString(UserFontDate));
+            parent.WidgetManager.StoreSetting(this, nameof(UserFontTime), new FontConverter().ConvertToInvariantString(UserFontTime));
         }
 
         public void LoadSettings()
