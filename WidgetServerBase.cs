@@ -19,7 +19,7 @@ namespace ClockWidget
 
         public string Website => "https://elmorlabs.com/";
 
-        public Version Version => new Version(1, 0, 0);
+        public Version Version => new Version(1, 0, 1);
 
         // Capabilities
         public SdkVersion TargetSdk => SdkVersion.Version_0;
