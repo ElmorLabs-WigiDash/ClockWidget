@@ -46,6 +46,16 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.ko-KR.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.ko-KR.resx</DependentUpon>
+    </Compile>
     <Compile Include="SettingsControl.xaml.cs">
       <DependentUpon>SettingsControl.xaml</DependentUpon>
     </Compile>
@@ -80,6 +90,16 @@
       <ExcludeAssets>all</ExcludeAssets>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.ko-KR.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.ko-KR.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PostBuildEvent>
@@ -87,5 +107,9 @@
 			xcopy "$(TargetDir)\*.dll" "$(SolutionDir)Manager\bin\$(ConfigurationName)\DefaultWidgets\$(TargetName)\" /F /Y
 			xcopy "$(TargetDir)\*.png" "$(SolutionDir)Manager\bin\$(ConfigurationName)\DefaultWidgets\$(TargetName)\" /F /Y
 		</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>rd /s /q "$(SolutionDir)Manager\bin\$(ConfigurationName)\DefaultWidgets\$(TargetName)\"
+xcopy "$(TargetDir)\" "$(SolutionDir)Manager\bin\$(ConfigurationName)\DefaultWidgets\$(TargetName)\" /F /Y /E /H /C /I</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -4,19 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ClockWidget"
+             xmlns:properties="clr-namespace:ClockWidget.Properties"
              mc:Ignorable="d"
              d:Background="White"
              d:DesignHeight="240" d:DesignWidth="225" Margin="10, 25">
   <StackPanel>
-    <CheckBox x:Name="useGlobalChk"  Height="20" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="6, 2" Content="Use Global Theme" FontSize="10" Click="useGlobalChk_Click"/>
-    <CheckBox x:Name="checkbox24h"  Height="20" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="6, 2" Content="Use 24h Time" FontSize="10" Click="checkbox24h_Click"/>
+    <CheckBox x:Name="useGlobalChk"  Height="20" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="6, 2" Content="{x:Static properties:Resources.SettingsControl_UseGlobalTheme}" FontSize="10" Click="useGlobalChk_Click"/>
+    <CheckBox x:Name="checkbox24h"  Height="20" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="6, 2" Content="{x:Static properties:Resources.SettingsControl_Use24hTime}" FontSize="10" Click="checkbox24h_Click"/>
 
     <Grid Margin="2">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="100"></ColumnDefinition>
         <ColumnDefinition></ColumnDefinition>
       </Grid.ColumnDefinitions>
-      <Label Content="Date Font" FontSize="10" HorizontalAlignment="Stretch"/>
+      <Label Content="{x:Static properties:Resources.SettingsControl_DateFont}" FontSize="10" HorizontalAlignment="Stretch"/>
       <Button x:Name="dateFontSelect" Grid.Column="1" Click="dateFontSelect_Click"  HorizontalAlignment="Stretch"></Button>
     </Grid>
 
@@ -25,7 +26,7 @@
         <ColumnDefinition Width="100"></ColumnDefinition>
         <ColumnDefinition></ColumnDefinition>
       </Grid.ColumnDefinitions>
-      <Label Content="Time Font" FontSize="10" HorizontalAlignment="Stretch"/>
+      <Label Content="{x:Static properties:Resources.SettingsControl_TimeFont}" FontSize="10" HorizontalAlignment="Stretch"/>
       <Button x:Name="timeFontSelect" Grid.Column="1" Click="timeFontSelect_Click" HorizontalAlignment="Stretch"></Button>
     </Grid>
 
@@ -34,7 +35,7 @@
         <ColumnDefinition Width="100"></ColumnDefinition>
         <ColumnDefinition></ColumnDefinition>
       </Grid.ColumnDefinitions>
-      <Label Content="Foreground Color" FontSize="10" HorizontalAlignment="Stretch"/>
+      <Label Content="{x:Static properties:Resources.SettingsControl_ForegroundColor}" FontSize="10" HorizontalAlignment="Stretch"/>
       <Button x:Name="fgColorSelect" Grid.Column="1" Click="fgColorSelect_Click" HorizontalAlignment="Stretch"></Button>
     </Grid>
 
@@ -43,7 +44,7 @@
         <ColumnDefinition Width="100"></ColumnDefinition>
         <ColumnDefinition></ColumnDefinition>
       </Grid.ColumnDefinitions>
-      <Label Content="Background Color" FontSize="10" HorizontalAlignment="Stretch"/>
+      <Label Content="{x:Static properties:Resources.SettingsControl_BackgroundColor}" FontSize="10" HorizontalAlignment="Stretch"/>
       <Button x:Name="bgColorSelect" Grid.Column="1" Click="bgColorSelect_Click" HorizontalAlignment="Stretch"></Button>
     </Grid>
   </StackPanel>
