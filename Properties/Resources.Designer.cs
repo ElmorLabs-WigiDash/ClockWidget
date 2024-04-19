@@ -61,6 +61,24 @@ namespace ClockWidget.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clock.
+        /// </summary>
+        public static string ClockWidgetServer_Clock {
+            get {
+                return ResourceManager.GetString("ClockWidgetServer_Clock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display the current time and date.
+        /// </summary>
+        public static string ClockWidgetServer_DisplayTheCurrentTimeAndDate {
+            get {
+                return ResourceManager.GetString("ClockWidgetServer_DisplayTheCurrentTimeAndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Background Color.
         /// </summary>
         public static string SettingsControl_BackgroundColor {

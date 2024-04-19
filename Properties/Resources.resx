@@ -115,4 +115,10 @@
   <data name="SettingsControl_BackgroundColor" xml:space="preserve">
     <value>Background Color</value>
   </data>
+  <data name="ClockWidgetServer_Clock" xml:space="preserve">
+    <value>Clock</value>
+  </data>
+  <data name="ClockWidgetServer_DisplayTheCurrentTimeAndDate" xml:space="preserve">
+    <value>Display the current time and date</value>
+  </data>
 </root>

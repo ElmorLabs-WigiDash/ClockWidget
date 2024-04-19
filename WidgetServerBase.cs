@@ -11,9 +11,9 @@ namespace ClockWidget
 
         // Identity
         public Guid Guid => new Guid(GetType().Assembly.GetName().Name);
-        public string Name => "Clock";
+        public string Name => ClockWidget.Properties.Resources.ClockWidgetServer_Clock;
 
-        public string Description => "Display the current time and date";
+        public string Description => ClockWidget.Properties.Resources.ClockWidgetServer_DisplayTheCurrentTimeAndDate;
 
         public string Author => "ElmorLabs";
 

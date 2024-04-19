@@ -135,4 +135,10 @@
   <data name="SettingsControl_BackgroundColor" xml:space="preserve">
     <value>배경 색</value>
   </data>
+  <data name="ClockWidgetServer_Clock" xml:space="preserve">
+    <value>시계</value>
+  </data>
+  <data name="ClockWidgetServer_DisplayTheCurrentTimeAndDate" xml:space="preserve">
+    <value>현재의 날짜 및 시간을 표시합니다</value>
+  </data>
 </root>
