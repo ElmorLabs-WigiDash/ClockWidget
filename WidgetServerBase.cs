@@ -19,10 +19,10 @@ namespace ClockWidget
 
         public string Website => "https://elmorlabs.com/";
 
-        public Version Version => new Version(1, 0, 1);
+        public Version Version => new Version(1, 0, 2);
 
         // Capabilities
-        public SdkVersion TargetSdk => SdkVersion.Version_0;
+        public SdkVersion TargetSdk => WidgetUtility.CurrentSdkVersion;
 
         public List<WidgetSize> SupportedSizes =>
             new List<WidgetSize>() {
