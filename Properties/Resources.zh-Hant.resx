@@ -117,4 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="SettingsControl_UseGlobalTheme" xml:space="preserve">
+    <value>使用全域主題</value>
+  </data>
+  <data name="SettingsControl_Use24hTime" xml:space="preserve">
+    <value>使用24小時制</value>
+  </data>
+  <data name="SettingsControl_DateFont" xml:space="preserve">
+    <value>日期字體</value>
+  </data>
+  <data name="SettingsControl_TimeFont" xml:space="preserve">
+    <value>時間字體</value>
+  </data>
+  <data name="SettingsControl_ForegroundColor" xml:space="preserve">
+    <value>前景顏色</value>
+  </data>
+  <data name="SettingsControl_BackgroundColor" xml:space="preserve">
+    <value>背景顏色</value>
+  </data>
+  <data name="ClockWidgetServer_Clock" xml:space="preserve">
+    <value>時鐘</value>
+  </data>
+  <data name="ClockWidgetServer_DisplayTheCurrentTimeAndDate" xml:space="preserve">
+    <value>顯示目前時間及日期</value>
+  </data>
 </root>
