@@ -91,8 +91,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.de.resx" />
-    <EmbeddedResource Include="Properties\Resources.fr.resx" />
+    <EmbeddedResource Include="Properties\Resources.de-DE.resx" />
+    <EmbeddedResource Include="Properties\Resources.fr-FR.resx" />
     <EmbeddedResource Include="Properties\Resources.ja-JP.resx" />
     <EmbeddedResource Include="Properties\Resources.ko-KR.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
