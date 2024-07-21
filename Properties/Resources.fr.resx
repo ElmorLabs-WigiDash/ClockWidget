@@ -117,4 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="SettingsControl_UseGlobalTheme" xml:space="preserve">
+    <value>Utiliser le thème général</value>
+  </data>
+  <data name="SettingsControl_Use24hTime" xml:space="preserve">
+    <value>Utiliser le format 24 heures</value>
+  </data>
+  <data name="SettingsControl_DateFont" xml:space="preserve">
+    <value>Police de la date</value>
+  </data>
+  <data name="SettingsControl_TimeFont" xml:space="preserve">
+    <value>Police de l'heure</value>
+  </data>
+  <data name="SettingsControl_ForegroundColor" xml:space="preserve">
+    <value>Couleur du premier plan</value>
+  </data>
+  <data name="SettingsControl_BackgroundColor" xml:space="preserve">
+    <value>Couleur de l'arrière plane</value>
+  </data>
+  <data name="ClockWidgetServer_Clock" xml:space="preserve">
+    <value>Horloge</value>
+  </data>
+  <data name="ClockWidgetServer_DisplayTheCurrentTimeAndDate" xml:space="preserve">
+    <value>Afficher la date et l'heure courantes</value>
+  </data>
 </root>
